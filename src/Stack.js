@@ -5,24 +5,34 @@ class Stack {
         this.maxLength = length - 1 // The length - 1 is the position of the last item. This is very useful to knowssssss
     }
     pop(){
-
+        if (this.pointer !== -1){ // Check if there is any items to remove
+            this.stack[this.pointer] = null // Remove top item
+            this.pointer -= 1 // Decrease pointer by one to remember this change
+        }
     }
 
-    push(){
-
+    push(value){
+        if (this.maxLength !== this.pointer) { // Check if array not full
+            this.pointer += 1 // Increase pointer by one as this will be where the final item is 
+            this.stack[this.pointer] = value // Put the value in the array at this location
+        }
     }
 
-    print(){
+    print(){ // Prints the array
+        console.log(this.stack)
+    }
 
+    get(){ // Returns the array
+        return this.stack
     }
 
     _(...args){ // ...args puts all parameters into a single variable
-        var type;
-        var values;
+        var type; // Stores if accessing multiple or a single item
+        var values; // Stores the locations to access
         if (typeof args[0] === "number" && args.length === 1){ // If input as _(1)
             type = "single"
             values = args[0]
-        } else if (args[0] === "number" && args.length !== 1) { // If input as _(1, 2, 3, 4)
+        } else if (typeof args[0] === "number" && args.length !== 1) { // If input as _(1, 2, 3, 4)
             type = "multi"
             values = args
         } else if (args[0].constructor === Array) { // If input as _([1, 2, 3, 4])
@@ -30,18 +40,16 @@ class Stack {
             values = args[0]
         }
 
+        // If multiple locations provided
         if (type === "multi") {
-            return values.forEach(item => {
+            // Get all items and return in same order in an array
+            return values.map(item => {
                 return this.stack[item]
-            });
-        } else {
+            })
+        } else { // If single location provided
             return this.stack[values]
         }
     }
 }
-
-a = new Stack(5)
-
-console.log(a._(1))
 
 exports.default = Stack
