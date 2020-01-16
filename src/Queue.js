@@ -40,3 +40,5 @@ class Queue {
         return this.queue[this.pointerStart] // Return first item but dont remove
     }
 }
+
+exports.default = Queue
